@@ -1,0 +1,56 @@
+<?php require_once "config.php"; ?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lesson 1 - Meeting of Father and Son</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://form.zhiyan114.com/libs/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://form.zhiyan114.com/libs/semantic.min.js"></script>
+    <script src="https://form.zhiyan114.com/libs/particle.js"></script>
+    <style>
+      .vcenter {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      #particle {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        background-color: #0f1c70;
+        background-image: url('');
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+      }
+      .afix {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body style="background-color: #0f1c70;">
+    <div class="afix">
+      <div class="ui one column stackable centered aligned page grid vcenter">
+         <div class="column eight wide">
+          <div class="ui placeholder segment center aligned grid">
+            <p>Placeholder page</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="particle" class="particle"></div>
+    <script>
+      // In-line script, not a very safe way to run js but oh well.
+      particlesJS.load('particle', 'particle.conf.json', function() { // Do nothing
+      })
+    </script>
+  </body>
+</html>
