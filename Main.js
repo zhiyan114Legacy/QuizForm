@@ -1,5 +1,4 @@
 particlesJS.load('particle', 'particle.conf.json', function() {})
-var MissingAnswer = "Please pick an answer."
 $('.ui.radio.checkbox').checkbox();
 $("#mainform").form({
     on: 'blur',
@@ -18,7 +17,7 @@ $("#mainform").form({
             rules:[
                 {
                     type: 'checked',
-                    prompt: MissingAnswer,
+                    prompt: "Question #1 is missing an answer",
                 }
             ]
         },
@@ -27,7 +26,7 @@ $("#mainform").form({
             rules:[
                 {
                     type: 'checked',
-                    prompt: MissingAnswer,
+                    prompt: "Question #2 is missing an answer",
                 }
               ]
         },
@@ -36,7 +35,7 @@ $("#mainform").form({
             rules:[
                 {
                     type: 'checked',
-                    prompt: MissingAnswer,
+                    prompt: "Question #3 is missing an answer",
                 }
               ]
         },
@@ -45,7 +44,7 @@ $("#mainform").form({
             rules:[
                 {
                     type: 'checked',
-                    prompt: MissingAnswer,
+                    prompt: "Question #4 is missing an answer",
                 }
             ]
         },
@@ -54,7 +53,7 @@ $("#mainform").form({
             rules:[
                 {
                     type: 'checked',
-                    prompt: MissingAnswer,
+                    prompt: "Question #5 is missing an answer",
                 }
             ]
         }
