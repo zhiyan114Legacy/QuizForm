@@ -59,26 +59,38 @@ $("#mainform").form({
         }
     }
 })
-document.getElementById("reset").onclick = async function() {
-    var DoReset = await Swal.fire({
-        title: "Clear Form",
-        text: "Are you sure you want to clear all of your data?",
-        showDenyButton: true,
-        icon: 'warning',
-    })["isConfirmed"]
-    if(DoReset) {
-        Swal.fire({
-            title: "Clear Form",
-            text: "Not sure why you would do that but your form has been cleared."
+$("#mainform").on("submit", async function(e){
+    e.preventDefault();
+    if($("#mainform").form("is valid")) {
+        var SubmitConfirm = await Swal.fire({
+            title: "Turn In",
+            icon: "question",
+            text: "Are you sure that you're ready to turn it in?",
+            showDenyButton: true,
+            confirmButtonText: "Yup",
+            denyButtonText: "Nope"
         })
+        if(SubmitConfirm["isConfirmed"]) {
+            // User Confirm to submit
+            var Result = await $.ajax({
+                url: "https://QuizFormBackend.zhiyan114.repl.co/",
+                type: "POST",
+                data: JSON.stringify($("#mainform").serializeArray()),
+                dataType: "json",
+                contentType : "application/json"              
+            })
+            await Swal.fire({
+                title: "Result",
+                icon: "success",
+                html: '<p>Congratulation, you got a <b>'+JSON.parse(Result)["Grade"]+'</b><br/><br/><p>Now get Rick Rolled:</p></br><img src="https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif" alt="You lucky you gotten away">'
+            })
+        } else {
+            // User declines to submit
+            await Swal.fire({
+                title: "Did Not Turn In",
+                icon: "error",
+                text: "You did not turn in the assignment. Please turn it in when you're ready."
+            })
+        }
     }
-    return DoReset
-}
-document.getElementById("submit").onclick = async function() {
-    return await Swal.fire({
-        title: "Submit",
-        text: "Are you sure that you want to turn in your answers?",
-        showDenyButton: true,
-        icon: 'question',
-    })["isConfirmed"]
-}
+})
