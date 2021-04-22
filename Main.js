@@ -59,3 +59,26 @@ $("#mainform").form({
         }
     }
 })
+document.getElementById("reset").onclick = async function() {
+    var DoReset = await Swal.fire({
+        title: "Clear Form",
+        text: "Are you sure you want to clear all of your data?",
+        showDenyButton: true,
+        icon: 'warning',
+    })["isConfirmed"]
+    if(DoReset) {
+        Swal.fire({
+            title: "Clear Form",
+            text: "Not sure why you would do that but your form has been cleared."
+        })
+    }
+    return DoReset
+}
+document.getElementById("submit").onclick = async function() {
+    return await Swal.fire({
+        title: "Submit",
+        text: "Are you sure that you want to turn in your answers?",
+        showDenyButton: true,
+        icon: 'question',
+    })["isConfirmed"]
+}
