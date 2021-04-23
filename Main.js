@@ -84,13 +84,13 @@ $("#mainform").on("submit", async function(e){
                 async:true              
             })
             document.getElementById("mainform").reset()
+            document.getElementById("Message").innerHTML = "You got "+Result["Grade"]+"% on the quiz."
             await Swal.fire({
                 title: "Result",
                 icon: "success",
                 text: "Congratulation, you got a "+Result["Grade"]+"% on the quiz. Now get rick rolled.",
                 imageUrl: "https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif"
             })
-            document.getElementById("Message").innerHTML = ""
         } else {
             // User declines to submit
             await Swal.fire({
