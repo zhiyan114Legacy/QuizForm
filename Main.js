@@ -73,7 +73,7 @@ $("#mainform").on("submit", async function(e){
         if(SubmitConfirm["isConfirmed"]) {
             // User Confirm to submit
             document.getElementById("submit").disabled = "true"
-            document.getElementById("submit").style = "cursor: not-allowed; pointer-events: all !important;"
+            document.getElementById("submit").style += "cursor: not-allowed; pointer-events: all !important;"
             document.getElementById("Message").innerHTML = "Your answer is submitting, please do not navigate away..."
             var Result = await $.ajax({
                 url: "https://QuizFormBackend.zhiyan114.repl.co/",
