@@ -83,6 +83,7 @@ $("#mainform").on("submit", async function(e){
                 contentType : "application/json",
                 async:true              
             })
+            document.getElementById("mainform").reset()
             await Swal.fire({
                 title: "Result",
                 icon: "success",
