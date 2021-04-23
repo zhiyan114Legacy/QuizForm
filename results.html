@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://form.zhiyan114.com/libs/semantic.min.js"></script>
     <script src="https://form.zhiyan114.com/libs/particle.js"></script>
+    <script src="https://semantic-ui.com/javascript/library/tablesort.js"></script>
     <style>
       .vcenter {
         position: relative;
@@ -53,12 +54,12 @@
          <div class="column sixteen wide">
           <div class="ui placeholder segment center aligned grid" style="background: rgba(255,255,255,0.8);">
             <h1 style="font-family: 'Press Start 2P';font-size: 30px;">View Results</h1>
-            <p>All of the student's quiz score will be available here.</p>
+            <p>All of the student's quiz score will be available here. Click on the head of the table to sort them.</p>
             <hr/><br/>
-            <table class="ui selectable celled inverted table center">
+            <table id="statboard" class="ui selectable sortable celled inverted table center">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th class="descending">Name</th>
                   <th>Score</th>
                 </tr>
               </thead>
@@ -98,6 +99,7 @@
           Row.appendChild(Score)
           Display.appendChild(Row)
         })
+        $('#statboard').tablesort()
         $("#reload").removeAttr("disabled")
         document.getElementById("reload").style = "";
       }
