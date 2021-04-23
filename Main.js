@@ -72,17 +72,20 @@ $("#mainform").on("submit", async function(e){
         })
         if(SubmitConfirm["isConfirmed"]) {
             // User Confirm to submit
+            document.getElementById("Message").innerHTML = "Your answer is submitting, please do not navigate away..."
             var Result = await $.ajax({
                 url: "https://QuizFormBackend.zhiyan114.repl.co/",
                 type: "POST",
                 data: JSON.stringify($("#mainform").serializeArray()),
                 dataType: "json",
-                contentType : "application/json"              
+                contentType : "application/json",
+                async:true              
             })
             await Swal.fire({
                 title: "Result",
                 icon: "success",
-                html: '<p>Congratulation, you got a <b>'+JSON.parse(Result)["Grade"]+'</b><br/><br/><p>Now get Rick Rolled:</p></br><img src="https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif" alt="You lucky you gotten away">'
+                text: "Congratulation, you got a "+Result["Grade"]+"% on the quiz. Now get rick rolled.",
+                imageUrl: "https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif"
             })
         } else {
             // User declines to submit
