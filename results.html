@@ -1,0 +1,110 @@
+<?php require_once "config.php"; ?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lesson 1 - Meeting of Father and Son</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://form.zhiyan114.com/libs/semantic.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://form.zhiyan114.com/libs/semantic.min.js"></script>
+    <script src="https://form.zhiyan114.com/libs/particle.js"></script>
+    <style>
+      .vcenter {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      #particle {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        background-color: #0f1c70;
+        background-image: url('');
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+      }
+      .afix {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: 100%;
+        width: 100%;
+      }
+      hr {
+        width:90%;
+      }
+      p {
+        font-family: Apple Chancery, cursive;
+      }
+      input[type="radio"] {
+  margin-top: -1px;
+  vertical-align: middle;
+}
+    </style>
+  </head>
+  <body>
+    <div class="afix">
+      <div class="ui one column stackable centered aligned page grid">
+         <div class="column sixteen wide">
+          <div class="ui placeholder segment center aligned grid" style="background: rgba(255,255,255,0.8);">
+            <h1 style="font-family: 'Press Start 2P';font-size: 30px;">View Results</h1>
+            <p>All of the student's quiz score will be available here.</p>
+            <hr/><br/>
+            <table class="ui selectable celled inverted table center">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody id="display">
+              </tbody>
+            </table>
+            <button class="ui inverted red button" id="reload">Reload List</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="particle" class="particle"></div>
+    <script>
+      // Not the secure way to execute script but ill take a shortcut for quick testing and stuff
+      var updateList = async function() {
+        const Display = document.getElementById("display")
+        document.getElementById("reload").disabled = "true"
+        document.getElementById("reload").style = "cursor: not-allowed; pointer-events: all !important;"
+        const Result = await $.ajax({
+            url: "https://quizformbackend.zhiyan114.repl.co/results",
+            type: "GET",
+            data: "",
+            dataType: "json",
+            contentType : "application/json",
+            async:true              
+        });
+        while (Display.firstChild) {
+          Display.removeChild(Display.lastChild);
+        }
+        Result.forEach((data)=>{
+          const Row = document.createElement("tr")
+          const DisplayName = document.createElement("td")
+          const Score = document.createElement("td")
+          DisplayName.appendChild(document.createTextNode(data[0]+"%"))
+          Score.appendChild(document.createTextNode(data[1]+"%"))
+          Row.appendChild(DisplayName)
+          Row.appendChild(Score)
+          Display.appendChild(Row)
+        })
+        $("#reload").removeAttr("disabled")
+        document.getElementById("reload").style = "";
+      }
+      document.getElementById("reload").onclick = updateList
+      particlesJS.load('particle', 'particle.conf.json', function() {
+        updateList();
+      })
+    </script>
+  </body>
+</html>

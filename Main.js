@@ -72,6 +72,8 @@ $("#mainform").on("submit", async function(e){
         })
         if(SubmitConfirm["isConfirmed"]) {
             // User Confirm to submit
+            document.getElementById("submit").disabled = "true"
+            document.getElementById("submit").style = "cursor: not-allowed; pointer-events: all !important;"
             document.getElementById("Message").innerHTML = "Your answer is submitting, please do not navigate away..."
             var Result = await $.ajax({
                 url: "https://QuizFormBackend.zhiyan114.repl.co/",
@@ -87,6 +89,7 @@ $("#mainform").on("submit", async function(e){
                 text: "Congratulation, you got a "+Result["Grade"]+"% on the quiz. Now get rick rolled.",
                 imageUrl: "https://i.pinimg.com/originals/88/82/bc/8882bcf327896ab79fb97e85ae63a002.gif"
             })
+            document.getElementById("Message").innerHTML = ""
         } else {
             // User declines to submit
             await Swal.fire({
