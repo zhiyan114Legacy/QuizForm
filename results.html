@@ -171,7 +171,8 @@
             })
             document.getElementById("Message").innerHTML = "The last request was not successful."
           }
-          $("#submitreq").removeAttr("disabled")
+          $("#submitreq").removeAttr("disabled");
+          document.getElementById("Email").value = "";
           document.getElementById("submitreq").style = "";
         };
       })
