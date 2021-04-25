@@ -1,13 +1,14 @@
-<?php require_once "config.php"; ?>
 <!DOCTYPE html>
+<!-- Hello, looks like your element inspecting this page. Answers are not here lol.-->
 <html lang="en">
   <head>
     <title>Lesson 1 - Meeting of Father and Son</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://form.zhiyan114.com/libs/semantic.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Press%20Start%202P' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://form.zhiyan114.com/libs/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
     <script src="https://form.zhiyan114.com/libs/particle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
@@ -61,8 +62,8 @@
               <input type="text" name="Name" placeholder="Your Name" style="text-align: center;">
               <small>The teacher will be grading it.</small>
               <br/><br/><br/>
-              <div class="ui two column doubling stackable grid container centered">
-                <div calss="column">
+              <div class="ui two column doubling stackable grid container">
+                <div class="column">
                   <h3>Question #1</h3>
                   <p>Why did Odysseus come in disguise to Ithaca?</p>
                   <div style="text-align:left" class="field">
@@ -87,7 +88,7 @@
                     </div>
                   </div>
                 </div>
-                <div calss="column">
+                <div class="column">
                   <h3>Question #2</h3>
                   <p>Why did Telemachus go to Pylos and Sparta?</p>
                   <div style="text-align:left" class="field">
@@ -114,8 +115,8 @@
                 </div>
               </div>
               <br/><br/><br/>
-              <div class="ui two column doubling stackable grid container centered">
-                <div calss="column">
+              <div class="ui two column doubling stackable grid container">
+                <div class="column">
                   <h3>Question #3</h3>
                   <p>How is Eumaeus the swineherd related to Odysseus?</p>
                   <div style="text-align:left" class="field">
@@ -140,7 +141,7 @@
                     </div>
                   </div>
                 </div>
-                <div calss="column">
+                <div class="column">
                   <h3>Question #4</h3>
                   <p>How does Telemachus realize the beggar is his father?</p>
                   <div style="text-align:left" class="field">
@@ -167,8 +168,8 @@
                 </div>
               </div>
               <br/><br/><br/>
-              <div class="ui two column doubling stackable grid container centered">
-                <div calss="column">
+              <div class="ui two column doubling stackable grid container">
+                <div class="column">
                   <h3>Question #5</h3>
                   <p>How does Telemachus react to his father having been revealed?</p>
                   <div style="text-align:left" class="field">
@@ -178,7 +179,7 @@
                     </div>
                     <br/><br/>
                     <div class="ui radio checkbox">
-                      <input type="radio" name="q5" tabindex="0" class="hidden" vlaue="B">
+                      <input type="radio" name="q5" tabindex="0" class="hidden" value="B">
                       <label>Telemachus throws his plate in anger</label>
                     </div>
                     <br/><br/>
@@ -192,6 +193,14 @@
                       <label>Telemachus hugs Odysseus and cries in his arms</label>
                     </div>
                   </div>
+                </div>
+                <!-- Feedback section-->
+                <div class="column">
+                  <h3>Feedback #1</h3>
+                  <p>Please rate from 0-10 on how well this form is designed and functioned.</p>
+                  <br/><br/>
+                  <div class="ui labeled slider" id="rating"></div>
+                  <small>This does not affect your grade. If you would not like to rate it, please leave it at -1.</small>
                 </div>
               </div>
               <br/><br/><br/>

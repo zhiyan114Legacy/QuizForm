@@ -1,11 +1,10 @@
-<?php require_once "config.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Lesson 1 - Quiz Result</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://form.zhiyan114.com/libs/semantic.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Press Start 2P' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Press%20Start%202P' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://form.zhiyan114.com/libs/semantic.min.js"></script>
     <script src="https://form.zhiyan114.com/libs/particle.js"></script>
@@ -61,6 +60,7 @@
                 <tr>
                   <th class="descending">Name</th>
                   <th>Score</th>
+                  <th>Feedback Rating</th>
                 </tr>
               </thead>
               <tbody id="display">
@@ -93,10 +93,13 @@
           const Row = document.createElement("tr")
           const DisplayName = document.createElement("td")
           const Score = document.createElement("td")
+          const Rating = document.createElement("td")
           DisplayName.appendChild(document.createTextNode(data[0]))
           Score.appendChild(document.createTextNode(data[1]+"%"))
+          Rating.appendChild(document.createTextNode(data[2]))
           Row.appendChild(DisplayName)
           Row.appendChild(Score)
+          Row.appendChild(Rating)
           Display.appendChild(Row)
         })
         $('#statboard').tablesort()
