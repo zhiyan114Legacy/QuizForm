@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
     <script src="https://form.zhiyan114.com/libs/particle.js"></script>
     <script src="https://semantic-ui.com/javascript/library/tablesort.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
       .vcenter {
         position: relative;
@@ -66,7 +67,25 @@
               <tbody id="display">
               </tbody>
             </table>
-            <button class="ui inverted red button" id="reload">Reload List</button>
+            <div class="ui three column doubling stackable grid container">
+              <div class="column">
+                <h3>Reload The List:</h3>
+                <p>This button is used to reload the result above without refreshing the page.</p>
+                <button class="ui inverted red button" id="reload">Reload List</button>
+              </div>
+              <div class="column">
+                <form class="ui form" id="emailreq" action="https://quizformbackend.zhiyan114.repl.co/results" method="POST">
+                  <h3>Email The Result:</h3>
+                  <p>If you would like an email copy of the results, please fill in your email and click Request.</p>
+                  <div class="field">
+                    <input type="text" placeholder="Your Email Address" name="Email" id="Email">
+                  </div>
+                  <input class="ui inverted green button" type="submit" id="submitreq" value="Request">
+                  <p id="Message" style="font-size:14px"></p>
+                  <div class="ui error message"></div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -109,6 +128,52 @@
       document.getElementById("reload").onclick = updateList
       particlesJS.load('particle', 'particle.conf.json', function() {
         updateList();
+      })
+      $("#emailreq").form({
+        fields: {
+          Email: {
+            identifier:"Email",
+            rules: [
+                {
+                   type: 'email',
+                   prompt: "Please enter a valid email.",
+               }
+            ]
+          },
+        }
+      })
+      $("#emailreq").on("submit", async function(e){
+        e.preventDefault();
+        if($("#emailreq").form("is valid")) {
+          document.getElementById("Message").innerHTML = "Sending Request, please wait..."
+          document.getElementById("submitreq").disabled = "true"
+          document.getElementById("submitreq").style = "cursor: not-allowed; pointer-events: all !important;"
+          const Result = await $.ajax({
+            url: "https://quizformbackend.zhiyan114.repl.co/results",
+            type: "POST",
+            data: JSON.stringify({"Email":document.getElementById("Email").value}),
+            dataType: "json",
+            contentType : "application/json",
+            async:true              
+          });
+          if(Result["success"]) {
+            await Swal.fire({
+              title: "Success",
+              icon: "success",
+              text: `A copy of the result has been successfully sent to the email: ${document.getElementById("Email").value}}.`,
+            })
+            document.getElementById("Message").innerHTML = "The last request was successful."
+          } else {
+            await Swal.fire({
+              title: "Failed",
+              icon: "error",
+              text: "There was an error while sending the email. Maybe a typo?"
+            })
+            document.getElementById("Message").innerHTML = "The last request was not successful."
+          }
+          $("#submitreq").removeAttr("disabled")
+          document.getElementById("submitreq").style = "";
+        };
       })
     </script>
   </body>

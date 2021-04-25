@@ -1,7 +1,6 @@
 particlesJS.load('particle', 'particle.conf.json', function() {})
 $('.ui.radio.checkbox').checkbox();
 $("#mainform").form({
-    on: 'blur',
     fields: {
         Name: {
             identifier:"Name",
