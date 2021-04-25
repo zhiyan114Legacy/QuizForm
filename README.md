@@ -10,7 +10,7 @@ A demo of google forms alternative.
 zhiyan114 - Fullstack development of this form
 ### Frontend
 * https://github.com/VincentGarreau/particles.js/ - Background Particle Effect
-* https://semantic-ui.com/ - Basically the fundamental of this form. Most interface are developed using semantic ui.
+* https://fomantic-ui.com/ - Basically the fundamental of this form. Most interface are developed using fomantic ui (semantic ui's alternative).
 * https://jquery.com/ - Simplified some ajax request and required by semantic ui.
 ### backend
 * https://replit.com - Basically my IDE and backend hosting for this form

@@ -91,6 +91,7 @@ $("#mainform").on("submit", async function(e){
                 async:true              
             })
             document.getElementById("mainform").reset()
+            $("#rating").slider("set value",-1)
             document.getElementById("Message").innerHTML = "You got "+Result["Grade"]+"% on the quiz."
             await Swal.fire({
                 title: "Result",
