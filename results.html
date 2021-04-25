@@ -81,7 +81,7 @@
                     <input type="text" placeholder="Your Email Address" name="Email" id="Email">
                   </div>
                   <input class="ui inverted green button" type="submit" id="submitreq" value="Request">
-                  <p id="Message" style="font-size:14px"></p>
+                  <p id="Message" style="font-size:16px"></p>
                   <div class="ui error message"></div>
                 </form>
               </div>
@@ -160,7 +160,7 @@
             await Swal.fire({
               title: "Success",
               icon: "success",
-              text: `A copy of the result has been successfully sent to the email: ${document.getElementById("Email").value}}.`,
+              text: `A copy of the result has been successfully sent to the email: ${document.getElementById("Email").value}.`,
             })
             document.getElementById("Message").innerHTML = "The last request was successful."
           } else {
