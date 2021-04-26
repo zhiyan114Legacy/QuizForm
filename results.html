@@ -156,7 +156,6 @@
             contentType : "application/json",
             async:true              
           });
-          document.getElementById("Email").value = "";
           if(Result["success"]) {
             await Swal.fire({
               title: "Success",
@@ -173,6 +172,7 @@
             document.getElementById("Message").innerHTML = "The last request was not successful."
           }
           $("#submitreq").removeAttr("disabled");
+          document.getElementById("Email").value = "";
           document.getElementById("submitreq").style = "";
         };
       })
