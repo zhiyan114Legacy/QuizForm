@@ -8,7 +8,7 @@ function Init() {
     socket.onopen = function(e) {
         VanillaToasts.create({
             title: "Socket Connected",
-            icon: "info",
+            type: "info",
             text: "Socket established, you will now be able to receive all announcements and quiz submissions in realtime.",
             timeout: 15000
         })
@@ -17,16 +17,15 @@ function Init() {
         const msg = JSON.parse(e_msg);
         VanillaToasts.create({
             title: (msg["title"] || "Server Notification"),
-            icon: "info",
+            type: "info",
             text: (msg["message"] || "Server has sent a test message."),
             timeout: 20000
         })
     }
     socket.onerror = function(err) {
-        Sentry.captureMessage(err)
         VanillaToasts.create({
             title: "Socket Error",
-            icon: "warning",
+            type: "warning",
             text: "Websocket received an error and was automatically reported to the developer.",
             timeout: 10000
         })
@@ -34,7 +33,7 @@ function Init() {
     socket.onclose = function(e) {
         VanillaToasts.create({
             title: "Socket Disconnected",
-            icon: "error",
+            type: "error",
             text: "Socket disconnected, you will now unable to receive any announcements or quiz submissions. It may take up to 30 seconds to reconnect or you can refresh the page to instantly reconnect.",
             timeout: 15000
         })
@@ -44,7 +43,7 @@ Init();
 function ShowMsg(Title,Text,Icon) {
     VanillaToasts.create({
         title: Title,
-        icon: (Icon || "info"),
+        type: (Icon || "info"),
         text: Text,
         timeout: 15000
     })
