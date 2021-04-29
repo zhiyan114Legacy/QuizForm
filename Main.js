@@ -78,7 +78,7 @@ $("#mainform").on("submit", async function(e){
             var SubmitData = $("#mainform").serializeArray();
             //SubmitData.push({"name":"Rating","value":$("#rating").slider("get value")})
             var Result = await $.ajax({
-                url: "https://QuizFormBackend.zhiyan114.repl.co/",
+                url: "wss://quizformbackend.zhiyan114.com",
                 type: "POST",
                 data: JSON.stringify(SubmitData),
                 dataType: "json",
@@ -92,7 +92,7 @@ $("#mainform").on("submit", async function(e){
                 title: "Result",
                 icon: "success",
                 text: "Congratulation, you got a "+Result["Grade"]+"% on the quiz. Now get rick rolled.",
-                imageUrl: "https://quizformbackend.zhiyan114.repl.co/trollimg"
+                imageUrl: "wss://quizformbackend.zhiyan114.com/trollimg"
             })
         } else {
             // User declines to submit

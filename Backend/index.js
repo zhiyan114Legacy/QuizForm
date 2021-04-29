@@ -130,6 +130,11 @@ fastify.post("/answer",(req,res)=>{
         })
     })
 })
+fastify.get("/trollimg",(req,res)=>{
+    // Returns a rickroll image LOL.
+    res.type("image/gif")
+    res.send(fs.readFileSync("./Troll.gif"))
+})
 fastify.delete("/answer",(req,res)=>{
     // Deleting answer
     if(req.headers.authorization == "92ie092hfeifhb821h09") {
