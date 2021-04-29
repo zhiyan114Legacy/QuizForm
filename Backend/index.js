@@ -1,13 +1,16 @@
 // QuizForm Backend v2 by zhiyan114 \\
 
+// Install Method:
 
 // Load all static dependency
+
 const sqlite = require("sqlite3"); // Broken on the programming machine, enable on test and production machine.
 const fs = require('fs');
 const https = require('https');
 const websocket = require('ws');
 const path = require('path');
 const sentry = require("@sentry/node");
+const fastify = require('fastify')
 
 // Configuration
 var config = {
@@ -15,15 +18,6 @@ var config = {
     key: fs.readFileSync("./cert/Private.key")
 }
 const Answers = {"q1":"B","q2":"C","q3":"A","q4":"B","q5":"D"}
-// Load all configurable dependency
-const fastify = require('fastify')({ 
-    logger: false,
-    http2: true,
-    https: {
-        cert: config["cert"],
-        key: config["key"]
-    }
- });
 
 // Important dependency Init Config
 Sentry.init({
@@ -36,6 +30,15 @@ const ws_secure_func = new https.createServer({
     cert: config["cert"],
     key: config["key"]
 })
+const rest_server = fastify({ 
+    logger: false,
+    http2: true,
+    https: {
+        allowHTTP1: true,
+        cert: config["cert"],
+        key: config["key"]
+    }
+ });
 const ws_server = new websocket.Server({ server: ws_secure_func });
 const db = new sqlite.Database(path.resolve("./Submissions.db",sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE),(err=>{
     if(err) {
@@ -43,7 +46,8 @@ const db = new sqlite.Database(path.resolve("./Submissions.db",sqlite3.OPEN_READ
     }
 }))
 // Init Configuration
-fastify.addContentTypeParser('text/json', { parseAs: 'string' }, fastify.getDefaultJsonParser('ignore', 'ignore'))
+rest_server.addContentTypeParser('text/json', { parseAs: 'string' }, rest_server.getDefaultJsonParser('ignore', 'ignore'))
+rest_server.register(require("fastify-https-redirect"))
 db.serialize(()=>{
     db.run(`CREATE TABLE if not exists \`response\` (\
         \`id\` INT(100) NOT NULL AUTO_INCREMENT,\
@@ -64,11 +68,11 @@ function toTitleCase(str) {
 }
 
 // REST API HANDLER
-fastify.get("/",(req,res)=>{
+rest_server.get("/",(req,res)=>{
     res.type('text/html')
     res.send(fs.readFileSync("./index.html").toString())
 })
-fastify.get("/answer",(req,res)=>{
+rest_server.get("/answer",(req,res)=>{
     // Getting the answers from the database
     db.serialize(()=>{
         db.all("SELECT * FROM response",(err, rows)=>{
@@ -84,7 +88,7 @@ fastify.get("/answer",(req,res)=>{
         })
     })
 })
-fastify.post("/answer",(req,res)=>{
+rest_server.post("/answer",(req,res)=>{
     // Submitting answers
     var Correct = 0;
     var InputName = "";
@@ -130,12 +134,12 @@ fastify.post("/answer",(req,res)=>{
         })
     })
 })
-fastify.get("/trollimg",(req,res)=>{
+rest_server.get("/trollimg",(req,res)=>{
     // Returns a rickroll image LOL.
     res.type("image/gif")
     res.send(fs.readFileSync("./Troll.gif"))
 })
-fastify.delete("/answer",(req,res)=>{
+rest_server.delete("/answer",(req,res)=>{
     // Deleting answer
     if(req.headers.authorization == "92ie092hfeifhb821h09") {
         console.log((req.headers["x-real-ip"] || req.headers["x-forwarded-for"] || "Unavailable")+" requested for data removal")
@@ -161,7 +165,7 @@ fastify.delete("/answer",(req,res)=>{
         res.send("NO")
     }
 })
-fastify.post("announce",(req,res)=>{
+rest_server.post("announce",(req,res)=>{
     // Announce the message to the people who are on the site
     // Complete later as it not part of the re-write.
     if(res.headers.authorization == "huqhqfi89fhgq8fg2q8qf") {
