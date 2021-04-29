@@ -51,9 +51,9 @@ rest_server.addContentTypeParser('text/json', { parseAs: 'string' }, rest_server
 rest_server.register(require("fastify-https-redirect"))
 db.serialize(()=>{
     db.run(`CREATE TABLE if not exists \`response\` (\
-\`id\` INT(100) NOT NULL AUTO_INCREMENT,\
-\`name\` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci,
-\`score\` TINYINT(4),\
+\`id\` INT(100) NOT NULL,\
+\`name\` VARCHAR(100) NOT NULL,
+\`score\` TINYINT(4) DEFAULT 0,\
 PRIMARY KEY (\`id\`)\
 );`)
 })
