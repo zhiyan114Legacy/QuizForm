@@ -1,6 +1,6 @@
 // QuizForm Backend v2 by zhiyan114 \\
 
-// Install Method:
+// Install Method: npm install fastify-https-redirect sqlite3 ws @sentry/node fastify
 
 // Load all static dependency
 
@@ -20,7 +20,7 @@ var config = {
 const Answers = {"q1":"B","q2":"C","q3":"A","q4":"B","q5":"D"}
 
 // Important dependency Init Config
-Sentry.init({
+sentry.init({
     dsn: "https://0ac7c3a39ea6439fb5d14ab39bdc908c@o125145.ingest.sentry.io/5741158",
     tracesSampleRate: 0.25,
 });
@@ -40,7 +40,7 @@ const rest_server = fastify({
     }
  });
 const ws_server = new websocket.Server({ server: ws_secure_func });
-const db = new sqlite.Database(path.resolve("./Submissions.db",sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE),(err=>{
+const db = new sqlite.Database(path.resolve("./Submissions.db",sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE),(err=>{
     if(err) {
         sentry.captureException(err)
     }
@@ -207,6 +207,15 @@ ws_server.on('connection',(ws_client)=>{
     })
 })
 
+// CLean exit
+process.on('SIGINT', function() {
+    console.log("Managed shutdown initiate...")
+    ws_server.clients.forEach((ws_client)=>{
+        ws_client.close();
+    })
+    db.close()
+    process.exit();
+  });
 // Final Runner
 fastify.listen(8080).then(()=>{
     console.log("Standard HTTP running")
