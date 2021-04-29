@@ -3,7 +3,7 @@ var updateList = async function() {
     document.getElementById("reload").disabled = "true"
     document.getElementById("reload").style = "cursor: not-allowed; pointer-events: all !important;"
     const Result = await $.ajax({
-        url: "wss://quizformbackend.zhiyan114.com/answer",
+        url: "https://quizformbackend.zhiyan114.com/answer",
         type: "GET",
         data: "",
         dataType: "json",
