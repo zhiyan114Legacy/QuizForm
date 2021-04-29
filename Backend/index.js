@@ -175,11 +175,12 @@ rest_server.delete("/answer",(req,res)=>{
 rest_server.post("/announce",(req,res)=>{
     // Announce the message to the people who are on the site
     // Complete later as it not part of the re-write.
-    if(res.headers.authorization == "huqhqfi89fhgq8fg2q8qf") {
-        if(res.body.message) {
+    if(req.headers.authorization == "huqhqfi89fhgq8fg2q8qf") {
+        if(req.body.message) {
             ws_server.clients.forEach((ws_client)=>{
-                ws_client.send(JSON.stringify({"title":"Announcement","message":res.body.message}))
+                ws_client.send(JSON.stringify({"title":"Announcement","message":req.body.message}))
             })
+            res.send("Complete")
         } else {
             res.status(400)
             res.send("Invalid Input")
@@ -195,7 +196,7 @@ rest_server.post("/announce",(req,res)=>{
 
 ws_server.on('connection',(ws_client)=>{
     ws_client.on('message',(msg)=>{
-        console.log("Websocket client tries to communicate:"+msg)
+        console.log("Websocket client tries to communicate: "+msg)
     });
     (async ()=>{
         while(true) {

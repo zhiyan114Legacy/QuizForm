@@ -43,19 +43,6 @@ async function Init() {
         await sleep(1000)
         failconn+=1
     }
-    if(failconn >= 5) {
-        VanillaToasts.create({
-            title: "Socket Connection Failed",
-            text: "Socket connection has failed. It likely the school has blocked port 8080.",
-            type: "error"
-        });
-    } else {
-        VanillaToasts.create({
-            title: "Socket Connected",
-            text: "Socket has been successfully been connected",
-            type: "success"
-        });
-    }
 }
 Init();
 function ShowMsg(Title,Text,Icon) {
