@@ -4,7 +4,7 @@ function sleep(ms) {
 }
 
 function Init() {
-    socket = new WebSocket('wss://quizformbackend.zhiyan114.com:23');
+    socket = new WebSocket('wss://quizformbackend.zhiyan114.com:8080');
     socket.onopen = function(e) {
         VanillaToasts.create({
             title: "Socket Connected",
@@ -54,7 +54,7 @@ function ShowMsg(Title,Text,Icon) {
         await sleep(30000) // Check state every half minutes
         if(!socket) {
             // How...
-            socket = new WebSocket('wss://quizformbackend.zhiyan114.com:23');
+            socket = new WebSocket('wss://quizformbackend.zhiyan114.com:8080');
         } else if(socket.readyState != WebSocket.OPEN) {
             // Socket are somehow able to connect...
             if(socket.readyState == WebSocket.CONNECTING) {

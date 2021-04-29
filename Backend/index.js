@@ -224,8 +224,8 @@ process.on('SIGINT', function() {
     process.exit();
   });
 // Final Runner
-rest_server.listen(443).then(()=>{
+rest_server.listen(443,"0.0.0.0").then(()=>{
     console.log("Standard HTTP running")
 }) // 443 for production
-ws_secure_func.listen(23)
+ws_secure_func.listen(8080)
 console.log("Websocket running")
