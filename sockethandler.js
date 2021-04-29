@@ -14,7 +14,8 @@ async function Init() {
         })
     }
     socket.onmessage = function(e_msg) {
-        const msg = JSON.parse(e_msg);
+        console.log(e_msg)
+        const msg = JSON.parse(e_msg.data);
         VanillaToasts.create({
             title: (msg["title"] || "Server Notification"),
             type: "info",
