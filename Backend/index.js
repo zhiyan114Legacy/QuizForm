@@ -1,6 +1,6 @@
 // QuizForm Backend v2 by zhiyan114 \\
 
-// Install Method: npm install fastify-https-redirect sqlite3 ws @sentry/node fastify
+// Install Method: npm install fastify-https-redirect sqlite3 ws @sentry/node fastify fastify-cors
 
 // Load all static dependency
 
@@ -49,6 +49,12 @@ const db = new sqlite.Database(path.resolve("./Submissions.db"),(sqlite.OPEN_REA
 // Init Configuration
 rest_server.addContentTypeParser('text/json', { parseAs: 'string' }, rest_server.getDefaultJsonParser('ignore', 'ignore'))
 rest_server.register(require("fastify-https-redirect"))
+rest_server.register(require("fastify-cors"),{
+    origin: "https://form.zhiyan114.com",
+    methods: ["POST","GET"],
+    exposedHeaders: "*",
+    allowedHeaders: "Content-Type"
+})
 db.serialize(()=>{
     db.run(`CREATE TABLE if not exists \`response\` (\
 \`id\` INT(100) NOT NULL,\
@@ -218,8 +224,8 @@ process.on('SIGINT', function() {
     process.exit();
   });
 // Final Runner
-rest_server.listen(8080).then(()=>{
+rest_server.listen(443).then(()=>{
     console.log("Standard HTTP running")
 }) // 443 for production
-ws_secure_func.listen(8081)
+ws_secure_func.listen(23)
 console.log("Websocket running")
