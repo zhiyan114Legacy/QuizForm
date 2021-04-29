@@ -24,6 +24,7 @@ sentry.init({
     dsn: "https://0ac7c3a39ea6439fb5d14ab39bdc908c@o125145.ingest.sentry.io/5741158",
     tracesSampleRate: 0.25,
 });
+Sentry.setTag("environment","Development")
 
 // Init the functions
 const ws_secure_func = new https.createServer({
@@ -50,11 +51,11 @@ rest_server.addContentTypeParser('text/json', { parseAs: 'string' }, rest_server
 rest_server.register(require("fastify-https-redirect"))
 db.serialize(()=>{
     db.run(`CREATE TABLE if not exists \`response\` (\
-        \`id\` INT(100) NOT NULL AUTO_INCREMENT,\
-        \`name\` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci,
-        \`score\` TINYINT(4),\
-        PRIMARY KEY (\`id\`)\
-    );`)
+\`id\` INT(100) NOT NULL AUTO_INCREMENT,\
+\`name\` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci,
+\`score\` TINYINT(4),\
+PRIMARY KEY (\`id\`)\
+);`)
 })
 
 // External Functions
@@ -165,7 +166,7 @@ rest_server.delete("/answer",(req,res)=>{
         res.send("NO")
     }
 })
-rest_server.post("announce",(req,res)=>{
+rest_server.post("/announce",(req,res)=>{
     // Announce the message to the people who are on the site
     // Complete later as it not part of the re-write.
     if(res.headers.authorization == "huqhqfi89fhgq8fg2q8qf") {
