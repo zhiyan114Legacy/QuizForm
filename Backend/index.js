@@ -24,7 +24,7 @@ sentry.init({
     dsn: "https://0ac7c3a39ea6439fb5d14ab39bdc908c@o125145.ingest.sentry.io/5741158",
     tracesSampleRate: 0.25,
 });
-Sentry.setTag("environment","Development")
+sentry.setTag("environment","Development")
 
 // Init the functions
 const ws_secure_func = new https.createServer({
