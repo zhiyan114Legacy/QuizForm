@@ -30,7 +30,7 @@ const ws_secure_func = new https.createServer({
     cert: config["cert"],
     key: config["key"]
 })
-const rest_server = fastify({ 
+const rest_server = fastify({
     logger: false,
     http2: true,
     https: {
@@ -40,11 +40,11 @@ const rest_server = fastify({
     }
  });
 const ws_server = new websocket.Server({ server: ws_secure_func });
-const db = new sqlite.Database(path.resolve("./Submissions.db",sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE),(err=>{
+const db = new sqlite.Database(path.resolve("./Submissions.db"),(sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE),(err)=>{
     if(err) {
         sentry.captureException(err)
     }
-}))
+})
 // Init Configuration
 rest_server.addContentTypeParser('text/json', { parseAs: 'string' }, rest_server.getDefaultJsonParser('ignore', 'ignore'))
 rest_server.register(require("fastify-https-redirect"))
@@ -207,7 +207,7 @@ ws_server.on('connection',(ws_client)=>{
     })
 })
 
-// CLean exit
+// Clean exit
 process.on('SIGINT', function() {
     console.log("Managed shutdown initiate...")
     ws_server.clients.forEach((ws_client)=>{
@@ -217,7 +217,7 @@ process.on('SIGINT', function() {
     process.exit();
   });
 // Final Runner
-fastify.listen(8080).then(()=>{
+rest_server.listen(8080).then(()=>{
     console.log("Standard HTTP running")
 }) // 443 for production
 ws_secure_func.listen(8081)
