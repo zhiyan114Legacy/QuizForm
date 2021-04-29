@@ -57,10 +57,9 @@ rest_server.register(require("fastify-cors"),{
 })
 db.serialize(()=>{
     db.run(`CREATE TABLE if not exists \`response\` (\
-\`id\` INT(100) NOT NULL,\
+\`id\` INTEGER PRIMARY KEY AUTOINCREMENT,\
 \`name\` VARCHAR(100) NOT NULL,
-\`score\` TINYINT(4) DEFAULT 0,\
-PRIMARY KEY (\`id\`)\
+\`score\` TINYINT(4) DEFAULT -1\
 );`)
 })
 
@@ -100,7 +99,7 @@ rest_server.post("/answer",(req,res)=>{
     var Correct = 0;
     var InputName = "";
     var ShareAnswer = false;
-    res.body.forEach((data)=>{
+    req.body.forEach((data)=>{
         if(data["name"] == "Name") {
             InputName = data["value"].toLowerCase()
         } else if(data["name"] == "shareAnswer") {
@@ -112,7 +111,7 @@ rest_server.post("/answer",(req,res)=>{
         }
     })
     db.serialize(()=>{
-        db.get(`SELECT score FROM from response WHERE name=${InputName}`,(err,row)=>{
+        db.get(`SELECT score FROM response WHERE name="${InputName}"`,(err,row)=>{
             if (err){
                 sentry.captureException(err)
             }
@@ -125,7 +124,7 @@ rest_server.post("/answer",(req,res)=>{
                 // New answer submission
                 console.log(InputName+" has submitted an answer")
                 const Score = Math.round((Correct/5)*100)
-                db.run(`INSERT INTO response (Name,Score) VALUES (${InputName},${Score})`);
+                db.run(`INSERT INTO response (name,score) VALUES ("${InputName}","${Score}")`);
                 res.type("application/json")
                 res.send({Grade: Score})
                 if(ShareAnswer) {

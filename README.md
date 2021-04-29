@@ -6,6 +6,22 @@ A demo of google forms alternative.
 * use https://quizformbackend.zhiyan114.repl.co/ to access to the backend request (POST request to check and submit answers)
 * use https://form.zhiyan114.com/results.html to view everyone's result
 * use https://quizformbackend.zhiyan114.repl.co/results to view raw json version of everyone's score
+
+## Versions
+
+### 2.0.0
+* Full backend rewrites (modifying the old backend source would take more time)
+* Moved from replit to sqlite3 database (higher stability)
+* Moved from express to fastify (better backend performance)
+* Some changes to the REST API path (using the index path are not a good idea especially for API)
+* Added WebSocket (Able to receive realtime announcement and form submitter)
+* Replaced feedback with settings (able to choose if you would like to share your grade or not)
+* Removed feedback rating header from results.html table (No longer needed)
+* Removed sending results to email (It not being used and takes slightly more time to maintenance it)
+
+### 1.0.0
+* Inital Release
+
 ## Credits
 zhiyan114 - Fullstack development of this form
 ### Frontend
