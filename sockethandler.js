@@ -3,7 +3,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function Init() {
+async function Init() {
     socket = new WebSocket('wss://quizformbackend.zhiyan114.com:8080');
     socket.onopen = function(e) {
         VanillaToasts.create({
@@ -38,6 +38,24 @@ function Init() {
             timeout: 15000
         })
     };
+    var failconn = 0;
+    while(socket.readyState == WebSocket.CONNECTING && failconn < 5) {
+        await sleep(1000)
+        failconn+=1
+    }
+    if(failconn >= 5) {
+        VanillaToasts.create({
+            title: "Socket Connection Failed",
+            text: "Socket connection has failed. It likely the school has blocked port 8080.",
+            type: "error"
+        });
+    } else {
+        VanillaToasts.create({
+            title: "Socket Connected",
+            text: "Socket has been successfully been connected",
+            type: "success"
+        });
+    }
 }
 Init();
 function ShowMsg(Title,Text,Icon) {
@@ -69,7 +87,6 @@ function ShowMsg(Title,Text,Icon) {
                     Init();
                     await sleep(3000)
                 }
-                ShowMsg("Socket Reconnected","Socket has been successfully reconnected","success")
             } else {
                 // Socket already closed, reopen it.
                 ShowMsg("Establishing Connection","Re-connecting socket...")
@@ -85,8 +102,6 @@ function ShowMsg(Title,Text,Icon) {
                 if(retrywave >= 15) {
                     // Unable to reconnect :/
                     ShowMsg("Connection failed","Unable to connect back to the socket, please refresh your page and try again...","error")
-                } else {
-                    ShowMsg("Reconnected","The socket has been reconnected...","success")
                 }
             }
         }

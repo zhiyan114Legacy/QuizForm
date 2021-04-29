@@ -196,7 +196,7 @@ rest_server.post("/announce",(req,res)=>{
 ws_server.on('connection',(ws_client)=>{
     ws_client.on('message',(msg)=>{
         console.log("Websocket client tries to communicate:"+msg)
-    })
+    });
     (async ()=>{
         while(true) {
             await sleep(30000) // Ping every half minutes
