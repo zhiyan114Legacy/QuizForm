@@ -78,7 +78,7 @@ $("#mainform").on("submit", async function(e){
             var SubmitData = $("#mainform").serializeArray();
             //SubmitData.push({"name":"Rating","value":$("#rating").slider("get value")})
             var Result = await $.ajax({
-                url: "https://quizformbackend.zhiyan114.com",
+                url: "https://quizformbackend.zhiyan114.com/answer",
                 type: "POST",
                 data: JSON.stringify(SubmitData),
                 dataType: "json",
