@@ -58,11 +58,7 @@ $("#mainform").form({
         }
     }
 })
-$("#rating").slider({
-    min: -1,
-    max: 10,
-    start: -1
-})
+$('.ui.checkbox').checkbox();
 $("#mainform").on("submit", async function(e){
     e.preventDefault();
     if($("#mainform").form("is valid")) {
@@ -80,7 +76,7 @@ $("#mainform").on("submit", async function(e){
             document.getElementById("submit").style = "width: 1000px;cursor: not-allowed; pointer-events: all !important;"
             document.getElementById("Message").innerHTML = "Your answer is submitting, please do not navigate away..."
             var SubmitData = $("#mainform").serializeArray();
-            SubmitData.push({"name":"Rating","value":$("#rating").slider("get value")})
+            //SubmitData.push({"name":"Rating","value":$("#rating").slider("get value")})
             var Result = await $.ajax({
                 url: "https://QuizFormBackend.zhiyan114.repl.co/",
                 type: "POST",

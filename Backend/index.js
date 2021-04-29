@@ -88,9 +88,12 @@ fastify.post("/answer",(req,res)=>{
     // Submitting answers
     var Correct = 0;
     var InputName = "";
+    var ShareAnswer = false;
     res.body.forEach((data)=>{
         if(data["name"] == "Name") {
             InputName = data["value"].toLowerCase()
+        } else if(data["name"] == "shareAnswer") {
+            ShareAnswer = data["value"]
         } else {
             if(Answers[data["name"]] == data["value"]) {
                 Correct += 1;
@@ -114,7 +117,7 @@ fastify.post("/answer",(req,res)=>{
                 db.run(`INSERT INTO response (Name,Score) VALUES (${InputName},${Score})`);
                 res.type("application/json")
                 res.send({Grade: Score})
-                if(res.body.shareAnswer) {
+                if(ShareAnswer) {
                     ws_server.clients.forEach((ws_client)=>{
                         ws_client.send(JSON.stringify({"title":"Submission","message":`${toTitleCase(InputName)} has submitted their quiz and got ${Score}%`}))
                     })
