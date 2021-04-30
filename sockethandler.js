@@ -4,7 +4,7 @@ function sleep(ms) {
 }
 
 async function Init() {
-    socket = new WebSocket('wss://quizformbackend.zhiyan114.com:8080');
+    socket = new WebSocket('wss://quizformbackend.zhiyan114.com');
     socket.onopen = function(e) {
         VanillaToasts.create({
             title: "Socket Connected",
@@ -39,11 +39,6 @@ async function Init() {
             timeout: 15000
         })
     };
-    var failconn = 0;
-    while(socket.readyState == WebSocket.CONNECTING && failconn < 5) {
-        await sleep(1000)
-        failconn+=1
-    }
 }
 Init();
 function ShowMsg(Title,Text,Icon) {
@@ -60,7 +55,7 @@ function ShowMsg(Title,Text,Icon) {
         await sleep(30000) // Check state every half minutes
         if(!socket) {
             // How...
-            socket = new WebSocket('wss://quizformbackend.zhiyan114.com:8080');
+            socket = new WebSocket('wss://quizformbackend.zhiyan114.com');
         } else if(socket.readyState != WebSocket.OPEN) {
             // Socket are somehow able to connect...
             if(socket.readyState == WebSocket.CONNECTING) {

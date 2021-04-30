@@ -27,20 +27,26 @@ sentry.init({
 sentry.setTag("environment","Development")
 
 // Init the functions
-const ws_secure_func = new https.createServer({
-    cert: config["cert"],
-    key: config["key"]
-})
+var ws_server = null
 const rest_server = fastify({
     logger: false,
     http2: true,
-    https: {
-        allowHTTP1: true,
-        cert: config["cert"],
-        key: config["key"]
+    serverFactory: (handler, opt)=>{
+        const secure_server = new https.createServer({
+            cert: config["cert"],
+            key: config["key"]
+        },(req,res)=>{
+            handler(req,res)
+        })
+        ws_server = new websocket.Server({ server: secure_server }); // path: "/realtime"
+        return secure_server;
     }
+    //https: {
+    //    allowHTTP1: true,
+    //    cert: config["cert"],
+    //    key: config["key"]
+    //}
  });
-const ws_server = new websocket.Server({ server: ws_secure_func });
 const db = new sqlite.Database(path.resolve("./Submissions.db"),(sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE),(err)=>{
     if(err) {
         sentry.captureException(err)
@@ -226,6 +232,5 @@ process.on('SIGINT', function() {
 // Final Runner
 rest_server.listen(443,"0.0.0.0").then(()=>{
     console.log("Standard HTTP running")
+    console.log("Websocket running")
 }) // 443 for production
-ws_secure_func.listen(8080)
-console.log("Websocket running")
