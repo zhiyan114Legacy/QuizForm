@@ -52,7 +52,7 @@ function ShowMsg(Title,Text,Icon) {
 // Re-connection handler (A shitty handler tbh)
 (async ()=>{
     while(true) {
-        await sleep(10000) // Check state every half minutes
+        await sleep(10000) // Check state every ten seconds
         if(!socket) {
             // How...
             Init();
@@ -77,14 +77,16 @@ function ShowMsg(Title,Text,Icon) {
                     await sleep(1000)
                 }
                 Init();
-                var retrywave = 0;
-                while(socket.readyState == WebSocket.CONNECTING && retrywave < 15) {
-                    await sleep(1000)
-                    retrywave +=1
-                }
-                if(retrywave >= 15) {
-                    // Unable to reconnect :/
-                    ShowMsg("Connection failed","Unable to connect back to the socket, please refresh your page and try again...","error")
+                await sleep(3000)
+                var retrysec = 0;
+                while(socket.readyState != WebSocket.OPEN) {
+                    if(retrysec < 120) { retrysec+=5 }
+                    if(socket.readyState != WebSocket.CLOSED) { socket.close(); }
+                    ShowMsg("Socket Timeout",`Socket was unable to be connected, retry in ${retrysec} seconds.`,"error");
+                    await sleep(retrysec*1000)
+                    ShowMsg("Reconnecting","Socket will attempt to reconnect...","info")
+                    Init();
+                    await sleep(3000)
                 }
             }
         }
