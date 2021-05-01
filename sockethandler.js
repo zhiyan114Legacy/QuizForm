@@ -8,7 +8,7 @@ async function Init() {
     socket.onopen = function(e) {
         VanillaToasts.create({
             title: "Socket Connected",
-            type: "info",
+            type: "success",
             text: "Socket established, you will now be able to receive all announcements and quiz submissions in realtime.",
             timeout: 20000
         })
