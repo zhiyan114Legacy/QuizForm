@@ -10,7 +10,7 @@ async function Init() {
             title: "Socket Connected",
             type: "info",
             text: "Socket established, you will now be able to receive all announcements and quiz submissions in realtime.",
-            timeout: 15000
+            timeout: 20000
         })
     }
     socket.onmessage = function(e_msg) {
@@ -20,7 +20,7 @@ async function Init() {
             title: (msg["title"] || "Server Notification"),
             type: "info",
             text: (msg["message"] || "Server has sent a test message."),
-            timeout: 20000
+            timeout: 30000
         })
     }
     socket.onerror = function(err) {
@@ -28,15 +28,15 @@ async function Init() {
             title: "Socket Error",
             type: "warning",
             text: "Websocket received an error and was automatically reported to the developer.",
-            timeout: 10000
+            timeout: 15000
         })
     }
     socket.onclose = function(e) {
         VanillaToasts.create({
             title: "Socket Disconnected",
             type: "error",
-            text: "Socket disconnected, you will now unable to receive any announcements or quiz submissions. It may take up to 30 seconds to reconnect or you can refresh the page to instantly reconnect.",
-            timeout: 15000
+            text: "Socket disconnected, you will now unable to receive any announcements or quiz submissions. It may take up to 10 seconds to reconnect or you can refresh the page to instantly reconnect.",
+            timeout: 20000
         })
     };
 }
@@ -52,10 +52,10 @@ function ShowMsg(Title,Text,Icon) {
 // Re-connection handler (A shitty handler tbh)
 (async ()=>{
     while(true) {
-        await sleep(30000) // Check state every half minutes
+        await sleep(10000) // Check state every half minutes
         if(!socket) {
             // How...
-            socket = new WebSocket('wss://quizformbackend.zhiyan114.com');
+            Init();
         } else if(socket.readyState != WebSocket.OPEN) {
             // Socket are somehow able to connect...
             if(socket.readyState == WebSocket.CONNECTING) {
