@@ -14,8 +14,10 @@ async function Init() {
         })
     }
     socket.onmessage = function(e_msg) {
-        console.log(e_msg)
         const msg = JSON.parse(e_msg.data);
+        if(updateList && msg["title"].toString().toLowerCase() == "submission") {
+            updateList();
+        }
         VanillaToasts.create({
             title: (msg["title"] || "Server Notification"),
             type: "info",

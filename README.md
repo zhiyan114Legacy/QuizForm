@@ -7,6 +7,9 @@ A demo of google forms alternative.
 
 ## Versions
 
+### 2.1.0
+* results' table will automatically refresh when receiving a response (socket must be connected)
+
 ### 2.0.0
 * Full backend rewrites (modifying the old backend source would take more time)
 * Moved from replit to sqlite3 database (higher stability)
