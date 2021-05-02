@@ -15,7 +15,7 @@ async function Init() {
     }
     socket.onmessage = function(e_msg) {
         const msg = JSON.parse(e_msg.data);
-        if(updateList && msg["title"].toString().toLowerCase() == "submission") {
+        if(typeof(updateList) != undefined && msg["title"].toString().toLowerCase() == "submission") {
             updateList();
         }
         VanillaToasts.create({
