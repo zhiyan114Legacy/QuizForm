@@ -5,7 +5,8 @@ function sleep(ms) {
 var audio = document.createElement("audio");
 audio.style = "display:none;";
 audio.src = "https://quizform.zhiyan114.com/ding.mp3"
-async function Init(isRetry) {
+var isRetry = false;
+async function Init() {
     socket = new WebSocket('wss://quizform.zhiyan114.com/api/v1/realtime');
     socket.onopen = function(e) {
         isRetry = false;
@@ -45,7 +46,7 @@ async function Init(isRetry) {
             VanillaToasts.create({
                 title: "Socket Disconnected",
                 type: "error",
-                text: "Socket disconnected, you will now unable to receive any announcements or quiz submissions. It may take up to 10 seconds to reconnect or you can refresh the page to instantly reconnect.",
+                text: "Socket disconnected, you will now unable to receive any announcements or quiz submissions. It may take up to 5 seconds to reconnect or you can refresh the page to instantly reconnect.",
                 timeout: 20000
             })
         }
@@ -63,7 +64,7 @@ function ShowMsg(Title,Text,Icon) {
 // Re-connection handler (A shitty handler tbh)
 (async ()=>{
     while(true) {
-        await sleep(10000) // Check state every ten seconds
+        await sleep(5000) // Check state every five seconds
         if(!socket) {
             // How...
             Init();
@@ -71,6 +72,7 @@ function ShowMsg(Title,Text,Icon) {
             // Socket are somehow unable to connect...
             if(socket.readyState == WebSocket.CONNECTING) {
                 // Websocket stucked on connecting, retry
+                isRetry = true
                 var retrysec = 0;
                 while(socket.readyState != WebSocket.OPEN) {
                     if(retrysec < 120) { retrysec+=5 }
@@ -78,12 +80,13 @@ function ShowMsg(Title,Text,Icon) {
                     ShowMsg("Socket Timeout",`Socket was unable to be connected, retry in ${retrysec} seconds.`,"error");
                     await sleep(retrysec*1000)
                     ShowMsg("Reconnecting","Socket will attempt to reconnect...","info")
-                    Init(true);
+                    Init();
                     await sleep(3000)
                 }
             } else {
                 // Socket already closed, reopen it.
                 ShowMsg("Establishing Connection","Re-connecting socket...")
+                isRetry = true
                 while(socket.readyState == WebSocket.CLOSING) {
                     await sleep(1000)
                 }
@@ -96,7 +99,7 @@ function ShowMsg(Title,Text,Icon) {
                     ShowMsg("Socket Timeout",`Socket was unable to be connected, retry in ${retrysec} seconds.`,"error");
                     await sleep(retrysec*1000)
                     ShowMsg("Reconnecting","Socket will attempt to reconnect...","info")
-                    Init(true);
+                    Init();
                     await sleep(3000)
                 }
             }
