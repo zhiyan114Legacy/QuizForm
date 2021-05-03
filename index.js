@@ -56,7 +56,7 @@ const db = new sqlite.Database(path.resolve("./Submissions.db"),(sqlite.OPEN_REA
 rest_server.addContentTypeParser('text/json', { parseAs: 'string' }, rest_server.getDefaultJsonParser('ignore', 'ignore'))
 rest_server.register(require("fastify-https-redirect"))
 rest_server.register(require("fastify-cors"),{
-    origin: "https://quizform.zhiyan114.com",
+    origin: false,
     methods: ["POST","GET"],
     exposedHeaders: "*",
     allowedHeaders: "Content-Type"
@@ -174,7 +174,6 @@ rest_server.delete("/api/v1/answer",(req,res)=>{
 })
 rest_server.post("/api/v1/announce",(req,res)=>{
     // Announce the message to the people who are on the site
-    // Complete later as it not part of the re-write.
     if(req.headers.authorization == "huqhqfi89fhgq8fg2q8qf") {
         if(req.body.message) {
             ws_server.clients.forEach((ws_client)=>{
