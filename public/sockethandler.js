@@ -5,7 +5,6 @@ function sleep(ms) {
 var audio = document.createElement("audio");
 audio.style = "display:none;";
 audio.src = "https://quizform.zhiyan114.com/ding.mp3"
-document.getElementsByTagName("BODY")[0].append();
 async function Init() {
     socket = new WebSocket('wss://quizform.zhiyan114.com/api/v1/realtime');
     socket.onopen = function(e) {
