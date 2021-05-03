@@ -135,16 +135,13 @@ rest_server.post("/api/v1/answer",(req,res)=>{
                 db.run('INSERT INTO response (name,score) VALUES (?,?)',[InputName,Score]);
                 res.type("application/json")
                 res.send({Grade: Score})
-                if(toTitleCase(InputName) != "") {
-                    InputName = toTitleCase(InputName);
-                }
                 if(ShareAnswer) {
                     ws_server.clients.forEach((ws_client)=>{
-                        ws_client.send(JSON.stringify({"title":"Submission","message":`${InputName} has submitted their quiz and got ${Score}%`}))
+                        ws_client.send(JSON.stringify({"title":"Submission","message":`${toTitleCase(InputName)} has submitted their quiz and got ${Score}%`}))
                     })
                 } else {
                     ws_server.clients.forEach((ws_client)=>{
-                        ws_client.send(JSON.stringify({"title":"Submission","message":`${InputName} has submitted their quiz and prefer to not share their score.`}))
+                        ws_client.send(JSON.stringify({"title":"Submission","message":`${toTitleCase(InputName)} has submitted their quiz and prefer to not share their score.`}))
                     })
                 }
             }
