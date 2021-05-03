@@ -197,7 +197,8 @@ rest_server.post("/api/v1/announce",(req,res)=>{
 
 ws_server.on('connection',(ws_client)=>{
     ws_client.on('message',(msg)=>{
-        console.log("Websocket client tries to communicate: "+msg)
+        //console.log("Websocket client tries to communicate: "+msg)
+        ws_client.close()
     });
     (async ()=>{
         while(true) {
