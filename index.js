@@ -18,6 +18,7 @@ var config = {
     key: fs.readFileSync("./cert/Private.key")
 }
 const Answers = {"q1":"B","q2":"C","q3":"A","q4":"B","q5":"D"}
+const AuthKey = "iahwfi8ahf9829hdiqnfcjabcufa99j"
 
 // Important dependency Init Config
 sentry.init({
@@ -149,7 +150,7 @@ rest_server.post("/api/v1/answer",(req,res)=>{
 })
 rest_server.delete("/api/v1/answer",(req,res)=>{
     // Deleting answer
-    if(req.headers.authorization == "92ie092hfeifhb821h09") {
+    if(req.headers.authorization == AuthKey) {
         console.log((req.headers["x-real-ip"] || req.headers["x-forwarded-for"] || "Unavailable")+" requested for data removal")
         if(req.query.user) {
             if(req.query.user.toLowerCase() == "all") {
@@ -175,7 +176,7 @@ rest_server.delete("/api/v1/answer",(req,res)=>{
 })
 rest_server.post("/api/v1/announce",(req,res)=>{
     // Announce the message to the people who are on the site
-    if(req.headers.authorization == "huqhqfi89fhgq8fg2q8qf") {
+    if(req.headers.authorization == AuthKey) {
         if(req.body.message) {
             ws_server.clients.forEach((ws_client)=>{
                 ws_client.send(JSON.stringify({"title":"Announcement","message":req.body.message}))

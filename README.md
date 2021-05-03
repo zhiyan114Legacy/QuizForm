@@ -11,7 +11,7 @@ A demo of google forms alternative.
 * Pages are now hosted with the backend
 
 ### 2.0.1
-* results' table will automatically refresh when receiving a response (socket must be connected)
+* Results' table will automatically refresh when receiving a response (socket must be connected)
 
 ### 2.0.0
 * Full backend rewrites (modifying the old backend source would take more time)
