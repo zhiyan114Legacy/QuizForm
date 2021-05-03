@@ -2,7 +2,10 @@ var socket = null;
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
+var audio = document.createElement("audio");
+audio.style = "display:none;";
+audio.src = "https://quizform.zhiyan114.com/ding.mp3"
+document.getElementsByTagName("BODY")[0].append();
 async function Init() {
     socket = new WebSocket('wss://quizform.zhiyan114.com/api/v1/realtime');
     socket.onopen = function(e) {
@@ -18,6 +21,8 @@ async function Init() {
         if(document.getElementById("statboard") && msg["title"].toString().toLowerCase() == "submission") {
             updateList();
         }
+        audio.currentTime = 0;
+        audio.play();
         VanillaToasts.create({
             title: (msg["title"] || "Server Notification"),
             type: "info",
