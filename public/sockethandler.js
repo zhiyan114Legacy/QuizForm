@@ -5,9 +5,10 @@ function sleep(ms) {
 var audio = document.createElement("audio");
 audio.style = "display:none;";
 audio.src = "https://quizform.zhiyan114.com/ding.mp3"
-async function Init() {
+async function Init(isRetry) {
     socket = new WebSocket('wss://quizform.zhiyan114.com/api/v1/realtime');
     socket.onopen = function(e) {
+        isRetry = false;
         VanillaToasts.create({
             title: "Socket Connected",
             type: "success",
@@ -30,20 +31,24 @@ async function Init() {
         })
     }
     socket.onerror = function(err) {
-        VanillaToasts.create({
-            title: "Socket Error",
-            type: "warning",
-            text: "Websocket received an error and was automatically reported to the developer.",
-            timeout: 15000
-        })
+        if(!isRetry) {
+            VanillaToasts.create({
+                title: "Socket Error",
+                type: "warning",
+                text: "Websocket received an error and was automatically reported to the developer.",
+                timeout: 15000
+            })
+        }
     }
     socket.onclose = function(e) {
-        VanillaToasts.create({
-            title: "Socket Disconnected",
-            type: "error",
-            text: "Socket disconnected, you will now unable to receive any announcements or quiz submissions. It may take up to 10 seconds to reconnect or you can refresh the page to instantly reconnect.",
-            timeout: 20000
-        })
+        if(!isRetry) {
+            VanillaToasts.create({
+                title: "Socket Disconnected",
+                type: "error",
+                text: "Socket disconnected, you will now unable to receive any announcements or quiz submissions. It may take up to 10 seconds to reconnect or you can refresh the page to instantly reconnect.",
+                timeout: 20000
+            })
+        }
     };
 }
 Init();
@@ -73,7 +78,7 @@ function ShowMsg(Title,Text,Icon) {
                     ShowMsg("Socket Timeout",`Socket was unable to be connected, retry in ${retrysec} seconds.`,"error");
                     await sleep(retrysec*1000)
                     ShowMsg("Reconnecting","Socket will attempt to reconnect...","info")
-                    Init();
+                    Init(true);
                     await sleep(3000)
                 }
             } else {
@@ -91,7 +96,7 @@ function ShowMsg(Title,Text,Icon) {
                     ShowMsg("Socket Timeout",`Socket was unable to be connected, retry in ${retrysec} seconds.`,"error");
                     await sleep(retrysec*1000)
                     ShowMsg("Reconnecting","Socket will attempt to reconnect...","info")
-                    Init();
+                    Init(true);
                     await sleep(3000)
                 }
             }
