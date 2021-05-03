@@ -6,7 +6,7 @@
 
 const sqlite = require("sqlite3"); // Broken on the programming machine, enable on test and production machine.
 const fs = require('fs');
-const https = require('https');
+const https = require('http2');
 const websocket = require('ws');
 const path = require('path');
 const sentry = require("@sentry/node");
@@ -32,9 +32,10 @@ const rest_server = fastify({
     logger: false,
     http2: true,
     serverFactory: (handler, opt)=>{
-        const secure_server = new https.createServer({
+        const secure_server = https.createSecureServer({
             cert: config["cert"],
-            key: config["key"]
+            key: config["key"],
+            allowHTTP1: true, // Websocket Support
         },(req,res)=>{
             handler(req,res)
         })
