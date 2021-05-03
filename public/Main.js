@@ -92,7 +92,7 @@ $("#mainform").on("submit", async function(e){
                 title: "Result",
                 icon: "success",
                 text: "Congratulation, you got a "+Result["Grade"]+"% on the quiz. Now get rick rolled.",
-                imageUrl: "https://quizformbackend.zhiyan114.com/Troll.gif"
+                imageUrl: "https://quizform.zhiyan114.com/Troll.gif"
             })
         } else {
             // User declines to submit

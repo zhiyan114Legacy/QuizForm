@@ -61,7 +61,7 @@ rest_server.register(require("fastify-cors"),{
     exposedHeaders: "*",
     allowedHeaders: "Content-Type"
 })
-fastify.register(require('fastify-static'), {
+rest_server.register(require('fastify-static'), {
     root: path.join(__dirname, 'public'),
     prefix: '/', // optional: default '/'
 })
@@ -84,10 +84,6 @@ function toTitleCase(str) {
 }
 
 // REST API HANDLER
-rest_server.get("/",(req,res)=>{
-    res.type('text/html')
-    res.send(fs.readFileSync("./index.html").toString())
-})
 rest_server.get("/api/v1/answer",(req,res)=>{
     // Getting the answers from the database
     db.serialize(()=>{
