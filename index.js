@@ -119,7 +119,7 @@ rest_server.post("/api/v1/answer",(req,res)=>{
         }
     })
     db.serialize(()=>{
-        db.get(`SELECT score FROM response WHERE name="${InputName}"`,(err,row)=>{
+        db.get('SELECT score FROM response WHERE name=?',InputName,(err,row)=>{
             if (err){
                 sentry.captureException(err)
             }
@@ -132,7 +132,7 @@ rest_server.post("/api/v1/answer",(req,res)=>{
                 // New answer submission
                 console.log(InputName+" has submitted an answer")
                 const Score = Math.round((Correct/5)*100)
-                db.run(`INSERT INTO response (name,score) VALUES ("${InputName}","${Score}")`);
+                db.run('INSERT INTO response (name,score) VALUES (?,?)',[InputName,Score]);
                 res.type("application/json")
                 res.send({Grade: Score})
                 if(ShareAnswer) {
@@ -162,7 +162,7 @@ rest_server.delete("/api/v1/answer",(req,res)=>{
             } else {
                 // Delete certain user
                 const user = req.query.user.toLowerCase()
-                db.run(`DELETE FROM response WHERE name=${user}`)
+                db.run(`DELETE FROM response WHERE name=?`,user)
                 res.send("OK USER: "+user)
             }
         } else {
