@@ -8,6 +8,9 @@ A demo of google forms alternative.
 ## Versions
 
 ### 2.1.0
+* Pages are now hosted with the backend
+
+### 2.0.1
 * results' table will automatically refresh when receiving a response (socket must be connected)
 
 ### 2.0.0

@@ -1,6 +1,6 @@
 // QuizForm Backend v2 by zhiyan114 \\
 
-// Install Method: npm install fastify-https-redirect sqlite3 ws @sentry/node fastify fastify-cors
+// Install Method: npm install fastify-https-redirect sqlite3 ws @sentry/node fastify fastify-cors fastify-static
 
 // Load all static dependency
 
@@ -38,7 +38,7 @@ const rest_server = fastify({
         },(req,res)=>{
             handler(req,res)
         })
-        ws_server = new websocket.Server({ server: secure_server }); // path: "/realtime"
+        ws_server = new websocket.Server({ server: secure_server, path:"/api/v1/realtime" }); // path: "/realtime"
         return secure_server;
     }
     //https: {
@@ -56,10 +56,14 @@ const db = new sqlite.Database(path.resolve("./Submissions.db"),(sqlite.OPEN_REA
 rest_server.addContentTypeParser('text/json', { parseAs: 'string' }, rest_server.getDefaultJsonParser('ignore', 'ignore'))
 rest_server.register(require("fastify-https-redirect"))
 rest_server.register(require("fastify-cors"),{
-    origin: "https://form.zhiyan114.com",
+    origin: "https://quizform.zhiyan114.com",
     methods: ["POST","GET"],
     exposedHeaders: "*",
     allowedHeaders: "Content-Type"
+})
+fastify.register(require('fastify-static'), {
+    root: path.join(__dirname, 'public'),
+    prefix: '/', // optional: default '/'
 })
 db.serialize(()=>{
     db.run(`CREATE TABLE if not exists \`response\` (\
@@ -84,7 +88,7 @@ rest_server.get("/",(req,res)=>{
     res.type('text/html')
     res.send(fs.readFileSync("./index.html").toString())
 })
-rest_server.get("/answer",(req,res)=>{
+rest_server.get("/api/v1/answer",(req,res)=>{
     // Getting the answers from the database
     db.serialize(()=>{
         db.all("SELECT * FROM response",(err, rows)=>{
@@ -100,7 +104,7 @@ rest_server.get("/answer",(req,res)=>{
         })
     })
 })
-rest_server.post("/answer",(req,res)=>{
+rest_server.post("/api/v1/answer",(req,res)=>{
     // Submitting answers
     var Correct = 0;
     var InputName = "";
@@ -146,12 +150,7 @@ rest_server.post("/answer",(req,res)=>{
         })
     })
 })
-rest_server.get("/trollimg",(req,res)=>{
-    // Returns a rickroll image LOL.
-    res.type("image/gif")
-    res.send(fs.readFileSync("./Troll.gif"))
-})
-rest_server.delete("/answer",(req,res)=>{
+rest_server.delete("/api/v1/answer",(req,res)=>{
     // Deleting answer
     if(req.headers.authorization == "92ie092hfeifhb821h09") {
         console.log((req.headers["x-real-ip"] || req.headers["x-forwarded-for"] || "Unavailable")+" requested for data removal")
@@ -177,7 +176,7 @@ rest_server.delete("/answer",(req,res)=>{
         res.send("NO")
     }
 })
-rest_server.post("/announce",(req,res)=>{
+rest_server.post("/api/v1/announce",(req,res)=>{
     // Announce the message to the people who are on the site
     // Complete later as it not part of the re-write.
     if(req.headers.authorization == "huqhqfi89fhgq8fg2q8qf") {

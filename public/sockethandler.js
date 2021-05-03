@@ -4,7 +4,7 @@ function sleep(ms) {
 }
 
 async function Init() {
-    socket = new WebSocket('wss://quizformbackend.zhiyan114.com');
+    socket = new WebSocket('wss://quizform.zhiyan114.com/api/v1/realtime');
     socket.onopen = function(e) {
         VanillaToasts.create({
             title: "Socket Connected",
