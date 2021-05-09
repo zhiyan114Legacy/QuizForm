@@ -1,37 +1,70 @@
-# QuizForm
-A demo of google forms alternative.
-## Access Link
-* use https://form.zhiyan114.com to access to the rendered page.
-* use https://form.zhiyan114.com/results.html to view everyone's result
-* Backend server varies but source code is located here
+# Getting Started with Create React App
 
-## Versions
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### 2.1.0
-* Pages are now hosted with the backend
+## Available Scripts
 
-### 2.0.1
-* Results' table will automatically refresh when receiving a response (socket must be connected)
+In the project directory, you can run:
 
-### 2.0.0
-* Full backend rewrites (modifying the old backend source would take more time)
-* Moved from replit to sqlite3 database (higher stability)
-* Moved from express to fastify (better backend performance)
-* Some changes to the REST API path (using the index path are not a good idea especially for API)
-* Added WebSocket (Able to receive realtime announcement and form submitter)
-* Replaced feedback with settings (able to choose if you would like to share your grade or not)
-* Removed feedback rating header from results.html table (No longer needed)
-* Removed sending results to email (It not being used and takes slightly more time to maintenance it)
+### `npm start`
 
-### 1.0.0
-* Inital Release
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Credits
-zhiyan114 - Fullstack development of this form
-### Frontend
-* https://github.com/VincentGarreau/particles.js/ - Background Particle Effect
-* https://fomantic-ui.com/ - Basically the fundamental of this form. Most interface are developed using fomantic ui (semantic ui's alternative).
-* https://jquery.com/ - Simplified some ajax request and required by semantic ui.
-### backend
-* https://replit.com - Basically my IDE and backend hosting for this form
-* https://expressjs.com/ - Really nice backend framework for nodejs (almost used php if I haven't remember this lol).
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
