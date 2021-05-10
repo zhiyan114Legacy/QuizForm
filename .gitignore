@@ -1,5 +1,9 @@
+# Ingore TLS certificate files
 *.pem
 *.key
 *.crt
 *.cer
 *.priv
+# Ignore nodejs internal files/folders
+node_modules/
+jspm_packages/

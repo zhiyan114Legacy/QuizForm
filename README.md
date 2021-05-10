@@ -1,9 +1,10 @@
 # QuizForm
 A demo of google forms alternative.
 ## Access Link
-* use https://form.zhiyan114.com to access to the rendered page.
-* use https://form.zhiyan114.com/results.html to view everyone's result
-* Backend server varies but source code is located here
+* A demo is linked here: https://quizform.zhiyan114.com
+
+## Run
+Type `npm run start` to run the demo yourself
 
 ## Versions
 

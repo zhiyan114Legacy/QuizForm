@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@sentry/node": "^6.3.4",
+    "fastify": "^3.15.0",
+    "fastify-cors": "^6.0.0",
+    "fastify-https-redirect": "^1.0.3",
+    "fastify-static": "^4.0.1",
+    "sqlite3": "^5.0.2",
+    "ws": "^7.4.5"
+  },
+  "name": "quizform",
+  "version": "2.1.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "zhiyan114",
+  "license": "All rights reserved",
+  "description": "A simple self-hosted backend form system"
+}
